@@ -553,9 +553,16 @@
     }
     .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; }
 
+    /* Nav links default (desktop) */
+    .nav-links {
+      display: flex; align-items: center; gap: 36px;
+    }
+
     @media (max-width: 768px) {
-      .nav-links { display: none; }
+      .nav-links { display: none !important; }
       .ham-btn { display: flex; }
+      .nav-brand-name { display: none; }
+      #navbar > div { padding: 0 20px; }
       .vinyl-wrap { width: 260px; right: -20px; opacity: 0.35; top: 50%; }
       .gallery-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -584,10 +591,10 @@
     <div style="max-width:1280px; margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between;">
       <a href="#hero" style="display:flex; align-items:center; gap:12px; text-decoration:none;">
         <img src="brand_assets/DjDavidMix Logo.png" alt="DjDavidMix Logo" style="height:44px; width:auto;">
-        <span style="font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:0.06em; color:white; line-height:1;">Dj<span style="color:var(--cyan);">David</span><span style="color:var(--magenta);">Mix</span></span>
+        <span class="nav-brand-name" style="font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:0.06em; color:white; line-height:1;">Dj<span style="color:var(--cyan);">David</span><span style="color:var(--magenta);">Mix</span></span>
       </a>
 
-      <div class="nav-links" style="display:flex; align-items:center; gap:36px;">
+      <div class="nav-links">
         <a href="#services" class="nav-link" data-en="Services" data-es="Servicios">Services</a>
         <a href="#gallery" class="nav-link" data-en="Gallery" data-es="Galería">Gallery</a>
         <a href="#booking" class="nav-link" data-en="Book Now" data-es="Reservar">Book Now</a>
