@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DjDavidMix — Premium DJ &amp; Lighting Services</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23060A0F'/><circle cx='16' cy='16' r='12' fill='none' stroke='%2300C8E8' stroke-width='1.5'/><circle cx='16' cy='16' r='5' fill='%2300C8E8'/><circle cx='16' cy='16' r='2' fill='%23060A0F'/></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Bebas Neue"', 'sans-serif'],
+            condensed: ['"Barlow Condensed"', 'sans-serif'],
+            body: ['Barlow', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --cyan: #00C8E8;
+      --cyan-bright: #22DEFF;
+      --cyan-dim: #007A94;
+      --magenta: #FF2079;
+      --magenta-bright: #FF58A0;
+      --magenta-dim: #7A0038;
+      --gold: #FFBE00;
+      --gold-bright: #FFD340;
+      --gold-dim: #7A5800;
+      --purple: #A855F7;
+      --purple-bright: #C084FC;
+      --purple-dim: #5B21B6;
+      --chrome: #A0BCC8;
+      --bg0: #04080F;
+      --bg1: #080F1C;
+      --bg2: #0C1524;
+      --bg3: #10192C;
+      --bg4: #162034;
+      --text: #D4E8F0;
+      --text-muted: #4A6878;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--bg0);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* Noise grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg0); }
+    ::-webkit-scrollbar-thumb { background: var(--cyan-dim); border-radius: 3px; }
+
+    /* ── NAV ── */
+    #navbar {
+      position: fixed; top: 0; width: 100%; z-index: 500;
+      padding: 20px 0;
+      transition: padding 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+    #navbar.scrolled {
+      padding: 12px 0;
+      background: rgba(4, 8, 15, 0.94);
+      backdrop-filter: blur(24px);
+      border-bottom-color: rgba(0, 200, 232, 0.12);
+    }
+    .nav-link {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--chrome); text-decoration: none;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 1px; background: var(--cyan); transform: scaleX(0);
+      transition: transform 0.2s ease;
+    }
+    .nav-link:hover { color: var(--cyan); }
+    .nav-link:hover::after { transform: scaleX(1); }
+
+    .lang-pill {
+      display: flex; align-items: center; gap: 2px;
+      background: rgba(16, 25, 44, 0.8);
+      border: 1px solid rgba(0, 200, 232, 0.2);
+      border-radius: 20px; padding: 3px 5px;
+    }
+    .lang-btn {
+      padding: 4px 11px; border-radius: 14px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+      cursor: pointer; border: none; background: transparent;
+      color: var(--text-muted);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .lang-btn.active { background: var(--cyan); color: var(--bg0); }
+    .lang-btn:hover:not(.active) { color: var(--cyan); }
+    .lang-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+    /* ── HAMBURGER ── */
+    .ham-btn {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .ham-btn span {
+      display: block; width: 24px; height: 2px;
+      background: var(--chrome); border-radius: 1px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .ham-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .ham-btn.open span:nth-child(2) { opacity: 0; }
+    .ham-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    #mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 490;
+      background: rgba(4, 8, 15, 0.97);
+      flex-direction: column; justify-content: center; align-items: center; gap: 40px;
+      backdrop-filter: blur(20px);
+    }
+    #mobile-menu.open { display: flex; }
+    #mobile-menu a {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px; letter-spacing: 0.05em;
+      color: var(--text); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    #mobile-menu a:hover { color: var(--cyan); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      position: relative; overflow: hidden;
+      display: flex; align-items: center;
+      background: var(--bg0);
+    }
+    /* Stage floor glow — where beams pool at the bottom */
+    #hero::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 260px;
+      background: linear-gradient(to top,
+        rgba(4, 8, 15, 0.95) 0%,
+        transparent 100%);
+      z-index: 2; pointer-events: none;
+    }
+
+    /* Vinyl record */
+    .vinyl-wrap {
+      position: absolute; right: -5%; top: 50%; transform: translateY(-50%);
+      width: min(600px, 55vw);
+    }
+    .vinyl-disc {
+      width: 100%; aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, #101E30 0%, #060C18 40%, #020508 100%);
+      position: relative;
+      animation: vinyl-spin 5s linear infinite;
+      box-shadow:
+        0 0 80px rgba(0, 200, 232, 0.18),
+        0 0 130px rgba(255, 32, 121, 0.1),
+        0 0 200px rgba(0, 200, 232, 0.06),
+        inset 0 0 60px rgba(0, 0, 0, 0.6),
+        0 40px 120px rgba(0, 0, 0, 0.7);
+    }
+    .vinyl-disc::before {
+      content: '';
+      position: absolute; inset: 0; border-radius: 50%;
+      background: repeating-radial-gradient(
+        circle at center,
+        transparent 0px,
+        transparent 8px,
+        rgba(255,255,255,0.018) 8px,
+        rgba(255,255,255,0.018) 9px
+      );
+    }
+    .vinyl-disc::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 30%; height: 30%;
+      border-radius: 50%;
+      background: radial-gradient(circle, #0D1A2C 0%, #080F1C 100%);
+      border: 1px solid rgba(0, 200, 232, 0.25);
+      box-shadow: 0 0 20px rgba(0, 200, 232, 0.15);
+    }
+    .vinyl-label-logo {
+      position: absolute;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 26%; z-index: 2;
+      filter: drop-shadow(0 0 8px rgba(0, 200, 232, 0.5));
+      pointer-events: none;
+    }
+    .vinyl-spindle {
+      position: absolute;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 2%; height: 2%;
+      border-radius: 50%;
+      background: #020405;
+      z-index: 3;
+    }
+    @keyframes vinyl-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── STAGE LIGHT BEAMS ── */
+    .stage-beam {
+      position: absolute; top: 0;
+      transform-origin: 50% 0%;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      z-index: 1;
+    }
+    /* Each beam: bright near-source, fades to a wide cone */
+    @keyframes beam-a {
+      0%,100% { transform: rotate(-18deg); opacity: 0.85; }
+      50%      { transform: rotate(-4deg);  opacity: 1;    }
+    }
+    @keyframes beam-b {
+      0%,100% { transform: rotate(10deg);  opacity: 0.75; }
+      50%      { transform: rotate(25deg);  opacity: 0.95; }
+    }
+    @keyframes beam-c {
+      0%,100% { transform: rotate(-6deg);  opacity: 0.70; }
+      40%      { transform: rotate(9deg);   opacity: 1;    }
+      80%      { transform: rotate(-14deg); opacity: 0.80; }
+    }
+    @keyframes beam-d {
+      0%,100% { transform: rotate(2deg);   opacity: 0.90; }
+      50%      { transform: rotate(-11deg); opacity: 1;    }
+    }
+    @keyframes beam-e {
+      0%,100% { transform: rotate(16deg);  opacity: 0.80; }
+      50%      { transform: rotate(3deg);   opacity: 1;    }
+    }
+    @keyframes beam-f {
+      0%,100% { transform: rotate(-24deg); opacity: 0.75; }
+      50%      { transform: rotate(-10deg); opacity: 0.95; }
+    }
+    @keyframes beam-g {
+      0%,100% { transform: rotate(6deg);   opacity: 0.80; }
+      50%      { transform: rotate(20deg);  opacity: 1;    }
+    }
+
+    /* Dust particles floating in the beams */
+    .particle { position: absolute; border-radius: 50%; pointer-events: none; }
+    @keyframes float-a {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0.7; }
+      33% { transform: translateY(-22px) translateX(12px); opacity: 1; }
+      66% { transform: translateY(10px) translateX(-6px); opacity: 0.4; }
+    }
+    @keyframes float-b {
+      0%, 100% { transform: translateY(0); opacity: 0.5; }
+      50% { transform: translateY(-28px) translateX(-14px); opacity: 0.9; }
+    }
+    @keyframes float-c {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0.6; }
+      40% { transform: translateY(18px) translateX(22px); opacity: 0.3; }
+      70% { transform: translateY(-12px) translateX(-8px); opacity: 0.8; }
+    }
+
+    /* Equalizer bars */
+    .eq-wrap { display: flex; align-items: flex-end; gap: 3px; height: 32px; }
+    .eq-bar {
+      width: 3px; border-radius: 2px 2px 0 0;
+      background: var(--bar-color, var(--cyan));
+      animation: eq-pulse var(--dur, 0.8s) ease-in-out infinite;
+      animation-delay: var(--del, 0s);
+    }
+    @keyframes eq-pulse {
+      0%, 100% { height: 4px; opacity: 0.4; }
+      50% { height: var(--max, 24px); opacity: 1; }
+    }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--cyan) 0%, var(--cyan-bright) 100%);
+      color: var(--bg0); padding: 14px 38px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; text-decoration: none; border: none;
+      cursor: pointer; border-radius: 2px;
+      box-shadow: 0 4px 24px rgba(0, 200, 232, 0.45), 0 2px 8px rgba(0,0,0,0.3);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.25s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 40px rgba(0, 200, 232, 0.65), 0 0 80px rgba(0, 200, 232, 0.15);
+    }
+    .btn-primary:active { transform: translateY(0) scale(0.99); }
+    .btn-primary:focus-visible { outline: 2px solid var(--cyan-bright); outline-offset: 3px; }
+
+    .btn-ghost {
+      display: inline-block;
+      background: transparent; color: var(--cyan);
+      padding: 13px 36px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; text-decoration: none;
+      border: 1px solid rgba(0, 200, 232, 0.45); cursor: pointer; border-radius: 2px;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-ghost:hover {
+      background: rgba(0, 200, 232, 0.08);
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(0, 200, 232, 0.2);
+    }
+    .btn-ghost:active { transform: translateY(0); }
+    .btn-ghost:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+    /* ── SECTION TAG ── */
+    .section-tag {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--cyan);
+    }
+    .section-tag::before {
+      content: ''; width: 28px; height: 1px;
+      background: var(--cyan); flex-shrink: 0;
+    }
+
+    /* ── SERVICE CARDS ── */
+    .service-card {
+      background: var(--bg2);
+      border: 1px solid rgba(0, 200, 232, 0.1);
+      border-radius: 4px; padding: 36px 28px;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--cyan) 50%, transparent 100%);
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0, 200, 232, 0.35);
+      box-shadow: 0 24px 64px rgba(0, 200, 232, 0.1), 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .service-card:hover::before { opacity: 1; }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      background: rgba(0, 200, 232, 0.08);
+      border: 1px solid rgba(0, 200, 232, 0.2);
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .service-card:hover .service-icon {
+      background: rgba(0, 200, 232, 0.15);
+      box-shadow: 0 0 20px rgba(0, 200, 232, 0.2);
+    }
+
+    /* Per-card accent colors */
+    .card-magenta { border-color: rgba(255, 32, 121, 0.12); }
+    .card-magenta::before { background: linear-gradient(90deg, transparent, var(--magenta), transparent); }
+    .card-magenta:hover { border-color: rgba(255, 32, 121, 0.4); box-shadow: 0 24px 64px rgba(255, 32, 121, 0.1), 0 8px 24px rgba(0,0,0,0.4); }
+    .card-magenta .service-icon { background: rgba(255, 32, 121, 0.08); border-color: rgba(255, 32, 121, 0.2); }
+    .card-magenta:hover .service-icon { background: rgba(255, 32, 121, 0.15); box-shadow: 0 0 20px rgba(255, 32, 121, 0.25); }
+
+    .card-gold { border-color: rgba(255, 190, 0, 0.12); }
+    .card-gold::before { background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .card-gold:hover { border-color: rgba(255, 190, 0, 0.4); box-shadow: 0 24px 64px rgba(255, 190, 0, 0.1), 0 8px 24px rgba(0,0,0,0.4); }
+    .card-gold .service-icon { background: rgba(255, 190, 0, 0.08); border-color: rgba(255, 190, 0, 0.2); }
+    .card-gold:hover .service-icon { background: rgba(255, 190, 0, 0.15); box-shadow: 0 0 20px rgba(255, 190, 0, 0.25); }
+
+    .card-purple { border-color: rgba(168, 85, 247, 0.12); }
+    .card-purple::before { background: linear-gradient(90deg, transparent, var(--purple), transparent); }
+    .card-purple:hover { border-color: rgba(168, 85, 247, 0.4); box-shadow: 0 24px 64px rgba(168, 85, 247, 0.1), 0 8px 24px rgba(0,0,0,0.4); }
+    .card-purple .service-icon { background: rgba(168, 85, 247, 0.08); border-color: rgba(168, 85, 247, 0.2); }
+    .card-purple:hover .service-icon { background: rgba(168, 85, 247, 0.15); box-shadow: 0 0 20px rgba(168, 85, 247, 0.25); }
+
+    /* ── GALLERY ── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 230px 230px 210px;
+      gap: 10px;
+    }
+    .g-tall { grid-row: span 2; }
+    .g-wide { grid-column: span 2; }
+
+    .gallery-item {
+      position: relative; overflow: hidden; border-radius: 3px;
+      cursor: pointer;
+    }
+    .gallery-item img,
+    .gallery-item video {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  filter 0.4s ease;
+      filter: brightness(0.88);
+    }
+    .gallery-item:hover img,
+    .gallery-item:hover video {
+      transform: scale(1.05);
+      filter: brightness(1);
+    }
+    .gallery-item::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0, 200, 232, 0.22) 0%, transparent 55%);
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .gallery-item:hover::after { opacity: 1; }
+    /* Stage-light color per gallery item on hover */
+    .gallery-item:nth-child(2)::after { background: linear-gradient(to top, rgba(255, 32, 121, 0.25) 0%, transparent 55%); }
+    .gallery-item:nth-child(3)::after { background: linear-gradient(to top, rgba(255, 190, 0, 0.25) 0%, transparent 55%); }
+    .gallery-item:nth-child(4)::after { background: linear-gradient(to top, rgba(168, 85, 247, 0.25) 0%, transparent 55%); }
+    .gallery-item:nth-child(5)::after { background: linear-gradient(to top, rgba(0, 200, 232, 0.25) 0%, transparent 55%); }
+    .gallery-item:nth-child(6)::after { background: linear-gradient(to top, rgba(255, 32, 121, 0.25) 0%, transparent 55%); }
+    .gallery-item:nth-child(7)::after { background: linear-gradient(to top, rgba(255, 190, 0, 0.25) 0%, transparent 55%); }
+    .gallery-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 14px 16px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: white;
+      background: linear-gradient(to top, rgba(4, 8, 15, 0.88) 0%, transparent 100%);
+      transform: translateY(6px); opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .gallery-item:hover .gallery-caption { transform: translateY(0); opacity: 1; }
+    /* Background-image fallback for awkward orientations */
+    .gallery-bg {
+      transition: filter 0.4s ease;
+      filter: brightness(0.88);
+    }
+    .gallery-bg:hover { filter: brightness(1); }
+
+    .video-badge {
+      position: absolute; top: 12px; right: 12px; z-index: 2;
+      background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 3px; padding: 4px 9px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      color: white; pointer-events: none;
+    }
+
+    /* ── STATS ── */
+    .stat-card {
+      text-align: center;
+      padding: 28px 20px;
+      border: 1px solid rgba(0, 200, 232, 0.1);
+      background: var(--bg2); border-radius: 3px;
+    }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px; letter-spacing: 0.03em;
+      color: var(--cyan);
+      line-height: 1;
+      text-shadow: 0 0 30px rgba(0, 200, 232, 0.4);
+    }
+
+    /* ── BOOKING FORM ── */
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--chrome);
+    }
+    .form-input {
+      background: var(--bg2);
+      border: 1px solid rgba(0, 200, 232, 0.15);
+      color: var(--text); padding: 13px 16px;
+      font-family: 'Barlow', sans-serif; font-size: 15px;
+      border-radius: 3px; outline: none; width: 100%;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      appearance: none;
+    }
+    .form-input::placeholder { color: var(--text-muted); }
+    .form-input:hover { border-color: rgba(0, 200, 232, 0.3); background: var(--bg3); }
+    .form-input:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px rgba(0, 200, 232, 0.1);
+      background: var(--bg3);
+    }
+    select.form-input option { background: var(--bg2); color: var(--text); }
+    textarea.form-input { resize: vertical; min-height: 110px; }
+
+    /* ── FOOTER ── */
+    .footer-link {
+      color: var(--text-muted); text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; font-weight: 500; letter-spacing: 0.06em;
+      transition: color 0.2s ease;
+    }
+    .footer-link:hover { color: var(--cyan); }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(0, 200, 232, 0.2) 50%, transparent 100%);
+    }
+
+    /* ── REVEAL ANIMATIONS ── */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; }
+    .reveal.visible {
+      animation: fade-up 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+    .reveal.delay-1 { animation-delay: 0.08s; }
+    .reveal.delay-2 { animation-delay: 0.16s; }
+    .reveal.delay-3 { animation-delay: 0.24s; }
+    .reveal.delay-4 { animation-delay: 0.32s; }
+    .reveal.delay-5 { animation-delay: 0.40s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .vinyl-wrap { width: min(480px, 50vw); }
+    }
+    .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .booking-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; }
+    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .ham-btn { display: flex; }
+      .vinyl-wrap { width: 260px; right: -20px; opacity: 0.35; top: 50%; }
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+      }
+      .g-tall { grid-row: auto; }
+      .g-wide { grid-column: auto; }
+      .booking-layout { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+    @media (max-width: 480px) {
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-grid .gallery-item { height: 180px; }
+      .gallery-grid .g-tall { grid-row: auto; }
+      .gallery-grid .g-wide { grid-column: auto; }
+    }
+
+    #form-success { display: none; }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════ NAVBAR ═══════════════════ -->
+  <nav id="navbar">
+    <div style="max-width:1280px; margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between;">
+      <a href="#hero" style="display:flex; align-items:center; gap:12px; text-decoration:none;">
+        <img src="brand_assets/DjDavidMix Logo.png" alt="DjDavidMix Logo" style="height:44px; width:auto;">
+        <span style="font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:0.06em; color:white; line-height:1;">Dj<span style="color:var(--cyan);">David</span><span style="color:var(--magenta);">Mix</span></span>
+      </a>
+
+      <div class="nav-links" style="display:flex; align-items:center; gap:36px;">
+        <a href="#services" class="nav-link" data-en="Services" data-es="Servicios">Services</a>
+        <a href="#gallery" class="nav-link" data-en="Gallery" data-es="Galería">Gallery</a>
+        <a href="#booking" class="nav-link" data-en="Book Now" data-es="Reservar">Book Now</a>
+        <a href="#contact" class="nav-link" data-en="Contact" data-es="Contacto">Contact</a>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:16px;">
+        <div class="lang-pill">
+          <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+          <button class="lang-btn" id="btn-es" onclick="setLang('es')">ES</button>
+        </div>
+        <button class="ham-btn" id="ham-btn" aria-label="Menu" onclick="toggleMobileMenu()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu">
+    <a href="#services" onclick="toggleMobileMenu()" data-en="Services" data-es="Servicios">Services</a>
+    <a href="#gallery" onclick="toggleMobileMenu()" data-en="Gallery" data-es="Galería">Gallery</a>
+    <a href="#booking" onclick="toggleMobileMenu()" data-en="Book Now" data-es="Reservar">Book Now</a>
+    <a href="#contact" onclick="toggleMobileMenu()" data-en="Contact" data-es="Contacto">Contact</a>
+    <div class="lang-pill" style="margin-top:16px;">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════ HERO ═══════════════════ -->
+  <section id="hero">
+    <!-- ═══ AMBIENT BACKGROUND LIGHTING ═══ -->
+
+    <!-- Broad atmospheric haze — reacts to beam colors sweeping through -->
+    <div style="position:absolute;inset:0;pointer-events:none;z-index:0;
+      background:
+        radial-gradient(ellipse 90% 70% at 10% 55%, rgba(0,200,232,0.09) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 60% at 50% 90%, rgba(210,240,255,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 55% at 88% 60%, rgba(0,255,140,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 50% at 65% 80%, rgba(168,85,247,0.08) 0%, transparent 65%),
+        radial-gradient(ellipse 55% 50% at 25% 80%, rgba(255,32,121,0.08) 0%, transparent 60%);
+    "></div>
+
+    <!-- Floor scatter pools — where each beam hits the stage -->
+    <div style="position:absolute;bottom:8%;left:2%;width:260px;height:80px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,200,232,0.22) 0%,transparent 75%);transform:scaleY(0.35);pointer-events:none;z-index:0;"></div>
+    <div style="position:absolute;bottom:6%;left:16%;width:240px;height:70px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,32,121,0.20) 0%,transparent 75%);transform:scaleY(0.35);pointer-events:none;z-index:0;"></div>
+    <div style="position:absolute;bottom:7%;left:30%;width:220px;height:65px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,190,0,0.18) 0%,transparent 75%);transform:scaleY(0.35);pointer-events:none;z-index:0;"></div>
+    <div style="position:absolute;bottom:5%;left:44%;width:280px;height:80px;border-radius:50%;background:radial-gradient(ellipse,rgba(210,240,255,0.25) 0%,transparent 75%);transform:scaleY(0.35);pointer-events:none;z-index:0;"></div>
+    <div style="position:absolute;bottom:7%;left:60%;width:230px;height:70px;border-radius:50%;background:radial-gradient(ellipse,rgba(168,85,247,0.20) 0%,transparent 75%);transform:scaleY(0.35);pointer-events:none;z-index:0;"></div>
+    <div style="position:absolute;bottom:6%;left:74%;width:210px;height:65px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,50,50,0.18) 0%,transparent 75%);transform:scaleY(0.35);pointer-events:none;z-index:0;"></div>
+    <div style="position:absolute;bottom:8%;left:86%;width:240px;height:70px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,255,140,0.18) 0%,transparent 75%);transform:scaleY(0.35);pointer-events:none;z-index:0;"></div>
+
+    <!-- Side-wall scatter -->
+    <div style="position:absolute;top:20%;right:0;width:200px;height:55%;background:linear-gradient(to left,rgba(0,255,140,0.06) 0%,transparent 100%);pointer-events:none;z-index:0;"></div>
+
+    <!-- ═══ STAGE LIGHT BEAMS ═══ -->
+
+    <!-- Beam 1 — Cyan -->
+    <div class="stage-beam" style="left:3%; width:200px; height:92vh;
+      background:linear-gradient(to bottom, rgba(0,200,232,0.7) 0%, rgba(0,200,232,0.35) 3%, rgba(0,200,232,0.10) 55%, transparent 100%);
+      clip-path:polygon(45% 0%,55% 0%,88% 100%,12% 100%);
+      animation:beam-a 9s ease-in-out infinite;"></div>
+
+    <!-- Beam 2 — Magenta -->
+    <div class="stage-beam" style="left:17%; width:180px; height:86vh;
+      background:linear-gradient(to bottom, rgba(255,32,121,0.70) 0%, rgba(255,32,121,0.32) 3%, rgba(255,32,121,0.09) 55%, transparent 100%);
+      clip-path:polygon(44% 0%,56% 0%,87% 100%,13% 100%);
+      animation:beam-b 7s ease-in-out infinite -2s;"></div>
+
+    <!-- Beam 3 — Amber/Gold -->
+    <div class="stage-beam" style="left:30%; width:165px; height:80vh;
+      background:linear-gradient(to bottom, rgba(255,190,0,0.65) 0%, rgba(255,190,0,0.28) 3%, rgba(255,190,0,0.08) 55%, transparent 100%);
+      clip-path:polygon(45% 0%,55% 0%,84% 100%,16% 100%);
+      animation:beam-c 11s ease-in-out infinite -4s;"></div>
+
+    <!-- Beam 4 — White spotlight (main center) -->
+    <div class="stage-beam" style="left:43%; width:220px; height:96vh;
+      background:linear-gradient(to bottom, rgba(210,240,255,0.80) 0%, rgba(210,240,255,0.38) 3%, rgba(210,240,255,0.10) 50%, transparent 100%);
+      clip-path:polygon(44% 0%,56% 0%,86% 100%,14% 100%);
+      animation:beam-d 8s ease-in-out infinite -1s;"></div>
+
+    <!-- Beam 5 — Purple -->
+    <div class="stage-beam" style="left:59%; width:175px; height:88vh;
+      background:linear-gradient(to bottom, rgba(168,85,247,0.68) 0%, rgba(168,85,247,0.30) 3%, rgba(168,85,247,0.08) 55%, transparent 100%);
+      clip-path:polygon(44% 0%,56% 0%,86% 100%,14% 100%);
+      animation:beam-e 9.5s ease-in-out infinite -3.5s;"></div>
+
+    <!-- Beam 6 — Red -->
+    <div class="stage-beam" style="left:73%; width:160px; height:82vh;
+      background:linear-gradient(to bottom, rgba(255,50,50,0.62) 0%, rgba(255,50,50,0.26) 3%, rgba(255,50,50,0.07) 55%, transparent 100%);
+      clip-path:polygon(45% 0%,55% 0%,85% 100%,15% 100%);
+      animation:beam-f 10s ease-in-out infinite -5s;"></div>
+
+    <!-- Beam 7 — Green/Teal -->
+    <div class="stage-beam" style="left:85%; width:190px; height:85vh;
+      background:linear-gradient(to bottom, rgba(0,255,140,0.60) 0%, rgba(0,255,140,0.26) 3%, rgba(0,255,140,0.07) 55%, transparent 100%);
+      clip-path:polygon(44% 0%,56% 0%,87% 100%,13% 100%);
+      animation:beam-g 7.5s ease-in-out infinite -6s;"></div>
+
+    <!-- Dust particles drifting in beams -->
+    <div class="particle" style="width:3px;height:3px;background:rgba(255,255,255,0.6);top:30%;left:20%;animation:float-a 9s ease-in-out infinite;"></div>
+    <div class="particle" style="width:2px;height:2px;background:rgba(255,255,255,0.5);top:50%;left:45%;animation:float-b 12s ease-in-out infinite 1s;"></div>
+    <div class="particle" style="width:2px;height:2px;background:rgba(255,255,255,0.4);top:40%;left:62%;animation:float-c 10s ease-in-out infinite 2s;"></div>
+    <div class="particle" style="width:3px;height:3px;background:rgba(255,255,255,0.5);top:60%;left:78%;animation:float-a 8s ease-in-out infinite 0.5s;"></div>
+
+    <!-- Vinyl record (right side) -->
+    <div class="vinyl-wrap">
+      <div class="vinyl-disc">
+        <img class="vinyl-label-logo" src="brand_assets/DjDavidMix Logo.png" alt="DjDavidMix">
+        <div class="vinyl-spindle"></div>
+      </div>
+    </div>
+
+    <!-- Hero content -->
+    <div style="max-width:1280px; margin:0 auto; padding:0 32px; padding-top:100px; padding-bottom:100px; position:relative; z-index:2;">
+      <div style="max-width:620px;">
+        <!-- Equalizer + label -->
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom:28px;">
+          <div class="eq-wrap">
+            <div class="eq-bar" style="--dur:0.7s;--del:0s;--max:28px;--bar-color:var(--cyan);"></div>
+            <div class="eq-bar" style="--dur:0.9s;--del:0.1s;--max:20px;--bar-color:var(--magenta);"></div>
+            <div class="eq-bar" style="--dur:0.6s;--del:0.2s;--max:32px;--bar-color:var(--gold);"></div>
+            <div class="eq-bar" style="--dur:1s;--del:0.05s;--max:16px;--bar-color:var(--cyan-bright);"></div>
+            <div class="eq-bar" style="--dur:0.75s;--del:0.15s;--max:26px;--bar-color:var(--purple);"></div>
+            <div class="eq-bar" style="--dur:0.85s;--del:0.25s;--max:22px;--bar-color:var(--magenta-bright);"></div>
+            <div class="eq-bar" style="--dur:0.65s;--del:0.3s;--max:18px;--bar-color:var(--gold-bright);"></div>
+          </div>
+          <span data-en="LIVE DJ &amp; EVENTS" data-es="DJ EN VIVO Y EVENTOS" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.2em;color:var(--cyan);">LIVE DJ &amp; EVENTS</span>
+        </div>
+
+        <h1 data-en="YOUR NIGHT.<br>YOUR VIBE.<br>YOUR DJ." data-es="TU NOCHE.<br>TU AMBIENTE.<br>TU DJ."
+          style="font-family:'Bebas Neue',sans-serif; font-size:clamp(64px,8vw,110px); line-height:0.92; letter-spacing:0.01em; color:white; margin-bottom:24px; text-shadow:0 0 60px rgba(0,200,232,0.15);">
+          YOUR NIGHT.<br>YOUR VIBE.<br>YOUR DJ.
+        </h1>
+
+        <p data-en="Professional DJ services for birthday parties, quinceañeras, private events &amp; more. Making every moment unforgettable with premium sound and lighting."
+           data-es="Servicios profesionales de DJ para fiestas de cumpleaños, quinceañeras, eventos privados y más. Haciendo cada momento inolvidable con sonido y luces premium."
+           style="font-size:17px; line-height:1.7; color:var(--chrome); margin-bottom:40px; max-width:520px;">
+          Professional DJ services for birthday parties, quinceañeras, private events &amp; more. Making every moment unforgettable with premium sound and lighting.
+        </p>
+
+        <div style="display:flex; flex-wrap:wrap; gap:14px;">
+          <a href="#booking" class="btn-primary" data-en="Book Your Event" data-es="Reserva Tu Evento">Book Your Event</a>
+          <a href="#gallery" class="btn-ghost" data-en="View Gallery" data-es="Ver Galería">View Gallery</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div style="position:absolute; bottom:32px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:6px;">
+      <span data-en="Scroll" data-es="Bajar" style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:0.2em;color:var(--text-muted);">Scroll</span>
+      <div style="width:1px; height:36px; background:linear-gradient(to bottom, rgba(0,200,232,0.5), transparent); animation:scroll-line 2s ease-in-out infinite;"></div>
+    </div>
+    <style>
+      @keyframes scroll-line {
+        0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+        50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+        100% { opacity: 0; transform: scaleY(1); transform-origin: bottom; }
+      }
+    </style>
+  </section>
+
+
+  <!-- ═══════════════════ STATS ═══════════════════ -->
+  <section style="background:var(--bg1); padding:60px 0; border-top:1px solid rgba(0,200,232,0.07); border-bottom:1px solid rgba(0,200,232,0.07);">
+    <div style="max-width:1280px; margin:0 auto; padding:0 32px;">
+      <div class="stats-grid">
+        <div class="stat-card reveal" style="border-color:rgba(255,32,121,0.15);">
+          <div class="stat-num" style="color:var(--magenta);text-shadow:0 0 30px rgba(255,32,121,0.5);">ALL</div>
+          <div style="margin-top:8px; font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted);" data-en="Genres &amp; Styles" data-es="Géneros y Estilos">Genres &amp; Styles</div>
+          <div style="margin-top:6px; font-family:'Barlow',sans-serif; font-size:13px; line-height:1.5; color:var(--text-muted); opacity:0.7;" data-en="Hip-hop, reggaeton, pop, latin, EDM &amp; more" data-es="Hip-hop, reggaetón, pop, latino, EDM y más">Hip-hop, reggaeton, pop, latin, EDM &amp; more</div>
+        </div>
+        <div class="stat-card reveal delay-1" style="border-color:rgba(255,190,0,0.15);">
+          <div class="stat-num" style="color:var(--gold);text-shadow:0 0 30px rgba(255,190,0,0.5);">PRO</div>
+          <div style="margin-top:8px; font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted);" data-en="Sound &amp; Lighting" data-es="Sonido e Iluminación">Sound &amp; Lighting</div>
+          <div style="margin-top:6px; font-family:'Barlow',sans-serif; font-size:13px; line-height:1.5; color:var(--text-muted); opacity:0.7;" data-en="Premium equipment, stage lighting &amp; effects" data-es="Equipo premium, iluminación escénica y efectos">Premium equipment, stage lighting &amp; effects</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════ SERVICES ═══════════════════ -->
+  <section id="services" style="padding:100px 0; background:var(--bg0);">
+    <div style="max-width:1280px; margin:0 auto; padding:0 32px;">
+      <div style="margin-bottom:56px;">
+        <div class="section-tag reveal" data-en="WHAT WE DO" data-es="LO QUE HACEMOS" style="margin-bottom:16px;">WHAT WE DO</div>
+        <h2 class="reveal delay-1" data-en="Events We Make<br>Unforgettable" data-es="Eventos Que Hacemos<br>Inolvidables"
+          style="font-family:'Bebas Neue',sans-serif; font-size:clamp(42px,5vw,72px); line-height:0.95; letter-spacing:0.02em; color:white;">
+          Events We Make<br>Unforgettable
+        </h2>
+        <p class="reveal delay-2" data-en="From intimate birthday parties to large-scale events, DjDavidMix brings the energy, music, and professionalism to make your celebration legendary."
+           data-es="Desde íntimas fiestas de cumpleaños hasta grandes eventos, DjDavidMix trae la energía, música y profesionalismo para hacer tu celebración legendaria."
+           style="margin-top:16px; max-width:540px; color:var(--chrome); line-height:1.7; font-size:16px;">
+          From intimate birthday parties to large-scale events, DjDavidMix brings the energy, music, and professionalism to make your celebration legendary.
+        </p>
+      </div>
+
+      <div class="services-grid">
+
+        <!-- Birthday Parties — cyan -->
+        <div class="service-card reveal">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <h3 data-en="Birthday Parties" data-es="Fiestas de Cumpleaños" style="font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; letter-spacing:0.04em; color:white; margin-bottom:10px;">Birthday Parties</h3>
+          <p data-en="Turn your birthday into a full-on party experience. Custom playlists, mic announcements, and non-stop energy all night long."
+             data-es="Convierte tu cumpleaños en una experiencia de fiesta total. Playlists personalizados, anuncios en micrófono y energía sin parar toda la noche."
+             style="color:var(--text-muted); font-size:14px; line-height:1.7;">
+            Turn your birthday into a full-on party experience. Custom playlists, mic announcements, and non-stop energy all night long.
+          </p>
+        </div>
+
+        <!-- Quinceañeras — magenta -->
+        <div class="service-card card-magenta reveal delay-1">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--magenta)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+          <h3 data-en="Quinceañeras &amp; Sweet 16s" data-es="Quinceañeras y Sweet 16" style="font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; letter-spacing:0.04em; color:white; margin-bottom:10px;">Quinceañeras &amp; Sweet 16s</h3>
+          <p data-en="Your special milestone deserves a special sound. Waltz, pop, reggaeton — we blend every tradition into one magical night."
+             data-es="Tu hito especial merece un sonido especial. Vals, pop, reggaetón — mezclamos cada tradición en una noche mágica."
+             style="color:var(--text-muted); font-size:14px; line-height:1.7;">
+            Your special milestone deserves a special sound. Waltz, pop, reggaeton — we blend every tradition into one magical night.
+          </p>
+        </div>
+
+        <!-- Private Events — gold -->
+        <div class="service-card card-gold reveal delay-2">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </div>
+          <h3 data-en="Private &amp; Family Events" data-es="Eventos Privados y Familiares" style="font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; letter-spacing:0.04em; color:white; margin-bottom:10px;">Private &amp; Family Events</h3>
+          <p data-en="Graduations, anniversaries, reunions — DjDavidMix tailors the perfect soundtrack for every private celebration."
+             data-es="Graduaciones, aniversarios, reuniones — DjDavidMix adapta la banda sonora perfecta para cada celebración privada."
+             style="color:var(--text-muted); font-size:14px; line-height:1.7;">
+            Graduations, anniversaries, reunions — DjDavidMix tailors the perfect soundtrack for every private celebration.
+          </p>
+        </div>
+
+        <!-- Corporate Events — purple -->
+        <div class="service-card card-purple reveal delay-3">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <h3 data-en="Corporate &amp; Social Events" data-es="Eventos Corporativos y Sociales" style="font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; letter-spacing:0.04em; color:white; margin-bottom:10px;">Corporate &amp; Social Events</h3>
+          <p data-en="From company parties to community events, we deliver professional sound management and crowd-reading expertise."
+             data-es="Desde fiestas corporativas hasta eventos comunitarios, ofrecemos gestión de sonido profesional y expertise para leer al público."
+             style="color:var(--text-muted); font-size:14px; line-height:1.7;">
+            From company parties to community events, we deliver professional sound management and crowd-reading expertise.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════ GALLERY ═══════════════════ -->
+  <section id="gallery" style="padding:100px 0; background:var(--bg1); border-top:1px solid rgba(0,200,232,0.06);">
+    <div style="max-width:1280px; margin:0 auto; padding:0 32px;">
+      <div style="margin-bottom:48px; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px;">
+        <div>
+          <div class="section-tag reveal" data-en="GALLERY" data-es="GALERÍA" style="margin-bottom:14px;">GALLERY</div>
+          <h2 class="reveal delay-1" data-en="Moments From Our Events" data-es="Momentos De Nuestros Eventos"
+            style="font-family:'Bebas Neue',sans-serif; font-size:clamp(40px,5vw,68px); line-height:0.95; letter-spacing:0.02em; color:white;">
+            Moments From Our Events
+          </h2>
+        </div>
+        <p class="reveal delay-2" data-en="Every event tells a story. Here's a look at the energy we bring."
+           data-es="Cada evento cuenta una historia. Aquí tienes una muestra de la energía que traemos."
+           style="color:var(--text-muted); font-size:15px; line-height:1.6; max-width:320px;">
+          Every event tells a story. Here's a look at the energy we bring.
+        </p>
+      </div>
+
+      <div class="gallery-grid reveal">
+        <!-- IMG_0383 — DJ gear close-up, tall portrait spanning 2 rows -->
+        <div class="gallery-item g-tall">
+          <img src="brand_assets/Gallery/IMG_0383.jpeg" alt="DJ Setup" style="object-position:center center;">
+          <div class="gallery-caption" data-en="DJ Setup" data-es="Equipo DJ">DJ Setup</div>
+        </div>
+        <!-- IMG_1528 — Venue lighting rig (portrait shot, rotated via bg) -->
+        <div class="gallery-item gallery-bg" style="background-image:url('brand_assets/Gallery/IMG_1528.jpeg'); background-size:cover; background-position:center 40%;">
+          <div class="gallery-caption" data-en="Lighting Show" data-es="Show de Luces">Lighting Show</div>
+        </div>
+        <!-- IMG_1529 — Full venue stage -->
+        <div class="gallery-item">
+          <img src="brand_assets/Gallery/IMG_1529%5B1%5D.jpg" alt="Venue Setup" style="object-position:center 60%;">
+          <div class="gallery-caption" data-en="Venue Setup" data-es="Montaje del Evento">Venue Setup</div>
+        </div>
+        <!-- IMG_1530 — Purple lighting -->
+        <div class="gallery-item">
+          <img src="brand_assets/Gallery/IMG_1530%5B1%5D.jpg" alt="Dance Floor" style="object-position:center 60%;">
+          <div class="gallery-caption" data-en="Dance Floor" data-es="Pista de Baile">Dance Floor</div>
+        </div>
+        <!-- IMG_1533 — Colorful DJ stage, wide spanning 2 cols -->
+        <div class="gallery-item">
+          <img src="brand_assets/Gallery/IMG_1533%5B1%5D.jpg" alt="Venue Setup" style="object-position:center 45%;">
+          <div class="gallery-caption" data-en="Venue Setup" data-es="Montaje del Evento">Venue Setup</div>
+        </div>
+        <!-- IMG_1532 — Dark blue stage lights -->
+        <div class="gallery-item">
+          <img src="brand_assets/Gallery/IMG_1532%5B1%5D.jpg" alt="Stage Lights" style="object-position:center 35%;">
+          <div class="gallery-caption" data-en="Stage Lights" data-es="Luces del Escenario">Stage Lights</div>
+        </div>
+        <!-- Video — wide to fill row 3 -->
+        <div class="gallery-item g-wide">
+          <video src="brand_assets/Gallery/event-highlights.mp4" autoplay muted loop playsinline style="object-position:center center;"></video>
+          <div class="video-badge">▶ VIDEO</div>
+          <div class="gallery-caption" data-en="Event Highlights" data-es="Destacados del Evento">Event Highlights</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════ BOOKING ═══════════════════ -->
+  <section id="booking" style="padding:100px 0; background:var(--bg0); border-top:1px solid rgba(0,200,232,0.06);">
+    <div style="max-width:1280px; margin:0 auto; padding:0 32px;">
+      <div class="booking-layout">
+
+        <!-- Left: info -->
+        <div>
+          <div class="section-tag reveal" data-en="BOOK NOW" data-es="RESERVAR" style="margin-bottom:16px;">BOOK NOW</div>
+          <h2 class="reveal delay-1" data-en="Ready To Make<br>Your Event<br>Legendary?" data-es="¿Listo Para Hacer<br>Tu Evento<br>Legendario?"
+            style="font-family:'Bebas Neue',sans-serif; font-size:clamp(48px,5vw,80px); line-height:0.92; letter-spacing:0.02em; color:white; margin-bottom:24px;">
+            Ready To Make<br>Your Event<br>Legendary?
+          </h2>
+          <p class="reveal delay-2" data-en="Fill out the booking form and DjDavidMix will get back to you within 24 hours to confirm availability and discuss the details of your event."
+             data-es="Llena el formulario de reserva y DjDavidMix te contactará dentro de 24 horas para confirmar disponibilidad y discutir los detalles de tu evento."
+             style="color:var(--chrome); font-size:16px; line-height:1.7; margin-bottom:40px;">
+            Fill out the booking form and DjDavidMix will get back to you within 24 hours to confirm availability and discuss the details of your event.
+          </p>
+
+          <div class="reveal delay-3" style="display:flex; flex-direction:column; gap:20px;">
+            <div style="display:flex; align-items:center; gap:14px;">
+              <div style="width:40px;height:40px;border-radius:3px;background:rgba(0,200,232,0.08);border:1px solid rgba(0,200,232,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px;" data-en="Email" data-es="Correo">Email</div>
+                <div style="color:var(--text);font-size:15px;">djdavidmix812@gmail.com</div>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:14px;">
+              <div style="width:40px;height:40px;border-radius:3px;background:rgba(0,200,232,0.08);border:1px solid rgba(0,200,232,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.29 6.29l1.62-1.62a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px;" data-en="Phone" data-es="Teléfono">Phone</div>
+                <div style="color:var(--text);font-size:15px;">(812) 989-8538</div>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:14px;">
+              <div style="width:40px;height:40px;border-radius:3px;background:rgba(0,200,232,0.08);border:1px solid rgba(0,200,232,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+              </div>
+              <div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px;" data-en="Service Area" data-es="Área de Servicio">Service Area</div>
+                <div style="color:var(--text);font-size:15px;" data-en="Clark County, Indiana" data-es="Clark County, Indiana">Clark County, Indiana</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: form -->
+        <div class="reveal delay-2" style="background:var(--bg2); border:1px solid rgba(0,200,232,0.1); border-radius:6px; padding:40px;">
+          <h3 data-en="Send Your Request" data-es="Envía Tu Solicitud"
+            style="font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; letter-spacing:0.06em; color:white; margin-bottom:28px; padding-bottom:20px; border-bottom:1px solid rgba(0,200,232,0.1);">
+            Send Your Request
+          </h3>
+
+          <!-- ★ FORMSPREE SETUP:
+               1. Go to https://formspree.io and sign up (free)
+               2. Click "New Form", name it "DjDavidMix Booking"
+               3. Copy your form endpoint, e.g. https://formspree.io/f/xpzgkwrj
+               4. Replace YOUR_FORM_ID below with your actual ID (the part after /f/)
+          -->
+          <form id="booking-form" action="https://formspree.io/f/mredneez
+          " onsubmit="submitForm(event)" style="display:flex; flex-direction:column; gap:18px;">
+
+            <!-- Formspree config fields -->
+            <input type="hidden" name="_subject" value="New Booking Request — DjDavidMix">
+            <input type="hidden" name="_replyto" id="replyto-field" value="">
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+              <div class="form-group">
+                <label class="form-label" data-en="Your Name" data-es="Tu Nombre">Your Name</label>
+                <input type="text" name="name" class="form-input" data-en-placeholder="Full name" data-es-placeholder="Nombre completo" placeholder="Full name" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-en="Email Address" data-es="Correo Electrónico">Email Address</label>
+                <input type="email" name="email" id="email-field" class="form-input" data-en-placeholder="your@email.com" data-es-placeholder="tu@correo.com" placeholder="your@email.com" required oninput="document.getElementById('replyto-field').value=this.value">
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+              <div class="form-group">
+                <label class="form-label" data-en="Phone Number" data-es="Número de Teléfono">Phone Number</label>
+                <input type="tel" name="phone" class="form-input" data-en-placeholder="(812) 989-8538" data-es-placeholder="(812) 989-8538" placeholder="(812) 989-8538">
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-en="Event Date" data-es="Fecha del Evento">Event Date</label>
+                <input type="date" name="event_date" class="form-input" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" data-en="Event Type" data-es="Tipo de Evento">Event Type</label>
+              <select name="event_type" class="form-input" required>
+                <option value="" disabled selected data-en="Select event type" data-es="Selecciona el tipo de evento">Select event type</option>
+                <option value="Birthday Party" data-en="Birthday Party" data-es="Fiesta de Cumpleaños">Birthday Party</option>
+                <option value="Quinceañera / Sweet 16" data-en="Quinceañera / Sweet 16" data-es="Quinceañera / Sweet 16">Quinceañera / Sweet 16</option>
+                <option value="Private Event" data-en="Private Event" data-es="Evento Privado">Private Event</option>
+                <option value="Corporate Event" data-en="Corporate Event" data-es="Evento Corporativo">Corporate Event</option>
+                <option value="Other" data-en="Other" data-es="Otro">Other</option>
+              </select>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+              <div class="form-group">
+                <label class="form-label" data-en="Venue / Location" data-es="Lugar / Ubicación">Venue / Location</label>
+                <input type="text" name="venue" class="form-input" data-en-placeholder="Venue name or city" data-es-placeholder="Nombre del lugar o ciudad" placeholder="Venue name or city">
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-en="Expected Guests" data-es="Invitados Esperados">Expected Guests</label>
+                <select name="guests" class="form-input">
+                  <option value="" disabled selected>—</option>
+                  <option value="Under 50" data-en="Under 50" data-es="Menos de 50">Under 50</option>
+                  <option value="50–100" data-en="50 – 100" data-es="50 – 100">50 – 100</option>
+                  <option value="100–200" data-en="100 – 200" data-es="100 – 200">100 – 200</option>
+                  <option value="200+" data-en="200+" data-es="200+">200+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" data-en="Additional Details" data-es="Detalles Adicionales">Additional Details</label>
+              <textarea name="message" class="form-input" data-en-placeholder="Tell us about your event, music preferences, special requests..." data-es-placeholder="Cuéntanos sobre tu evento, preferencias musicales, solicitudes especiales..." placeholder="Tell us about your event, music preferences, special requests..."></textarea>
+            </div>
+
+            <div id="form-success"></div>
+
+            <button type="submit" id="submit-btn" class="btn-primary" style="width:100%; text-align:center; padding:16px;" data-en="Send Booking Request" data-es="Enviar Solicitud de Reserva">
+              Send Booking Request
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════ CONTACT / FOOTER ═══════════════════ -->
+  <footer id="contact" style="background:var(--bg1); border-top:1px solid rgba(0,200,232,0.08); padding:64px 0 32px;">
+    <div style="max-width:1280px; margin:0 auto; padding:0 32px;">
+      <div class="footer-grid" style="margin-bottom:56px;">
+
+        <!-- Brand col -->
+        <div>
+          <img src="brand_assets/DjDavidMix Logo.png" alt="DjDavidMix" style="height:52px; width:auto; margin-bottom:20px;">
+          <p data-en="Professional DJ services for every celebration. Making your moments unforgettable with premium sound, lighting, and music."
+             data-es="Servicios profesionales de DJ para cada celebración. Haciendo tus momentos inolvidables con sonido premium, luces y música."
+             style="color:var(--text-muted); font-size:14px; line-height:1.7; max-width:340px; margin-bottom:24px;">
+            Professional DJ services for every celebration. Making your moments unforgettable with premium sound, lighting, and music.
+          </p>
+          <!-- Social icons -->
+          <div style="display:flex; gap:12px;">
+            <a href="https://www.instagram.com/djdavidmix812/" target="_blank" rel="noopener" aria-label="Instagram" style="width:38px;height:38px;border-radius:3px;background:rgba(0,200,232,0.08);border:1px solid rgba(0,200,232,0.15);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:background 0.2s ease,border-color 0.2s ease;" onmouseover="this.style.background='rgba(0,200,232,0.18)';this.style.borderColor='rgba(0,200,232,0.4)'" onmouseout="this.style.background='rgba(0,200,232,0.08)';this.style.borderColor='rgba(0,200,232,0.15)'">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="https://www.facebook.com/share/18h2dgbsT5/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook" style="width:38px;height:38px;border-radius:3px;background:rgba(0,200,232,0.08);border:1px solid rgba(0,200,232,0.15);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:background 0.2s ease,border-color 0.2s ease;" onmouseover="this.style.background='rgba(0,200,232,0.18)';this.style.borderColor='rgba(0,200,232,0.4)'" onmouseout="this.style.background='rgba(0,200,232,0.08)';this.style.borderColor='rgba(0,200,232,0.15)'">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick links -->
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px;" data-en="Quick Links" data-es="Enlaces">Quick Links</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <a href="#hero" class="footer-link" data-en="Home" data-es="Inicio">Home</a>
+            <a href="#services" class="footer-link" data-en="Services" data-es="Servicios">Services</a>
+            <a href="#gallery" class="footer-link" data-en="Gallery" data-es="Galería">Gallery</a>
+            <a href="#booking" class="footer-link" data-en="Book Now" data-es="Reservar">Book Now</a>
+          </div>
+        </div>
+
+        <!-- Contact info -->
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px;" data-en="Contact" data-es="Contacto">Contact</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="color:var(--text-muted);font-size:14px;line-height:1.5;">djdavidmix812@gmail.com</div>
+            <div style="color:var(--text-muted);font-size:14px;line-height:1.5;">(812) 989-8538</div>
+            <div style="color:var(--text-muted);font-size:14px;line-height:1.5;" data-en="Clark County, Indiana" data-es="Clark County, Indiana">Clark County, Indiana</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="divider" style="margin-bottom:24px;"></div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <span style="color:var(--text-muted); font-size:13px;" data-en="© 2026 DjDavidMix. All rights reserved." data-es="© 2026 DjDavidMix. Todos los derechos reservados.">© 2026 DjDavidMix. All rights reserved.</span>
+        <span style="color:var(--text-muted); font-size:13px;" data-en="Professional DJ Services" data-es="Servicios Profesionales de DJ">Professional DJ Services</span>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    // ── Language system ──────────────────────────────────────
+    let currentLang = 'en';
+
+    function setLang(lang) {
+      currentLang = lang;
+
+      // Toggle button styles
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      if (lang === 'en') {
+        document.querySelectorAll('#btn-en, #mobile-menu .lang-btn:first-child').forEach(b => b.classList.add('active'));
+      } else {
+        document.querySelectorAll('#btn-es, #mobile-menu .lang-btn:last-child').forEach(b => b.classList.add('active'));
+      }
+
+      // Update all [data-en] / [data-es] text elements
+      document.querySelectorAll('[data-en]').forEach(el => {
+        const text = el.getAttribute('data-' + lang);
+        if (!text) return;
+        // Don't override if it's an input placeholder — handle that separately
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') return;
+        if (el.tagName === 'SELECT') return;
+        el.innerHTML = text;
+      });
+
+      // Update placeholders
+      document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+        el.placeholder = el.getAttribute('data-' + lang + '-placeholder') || el.placeholder;
+      });
+
+      // Update select options
+      document.querySelectorAll('select option[data-en]').forEach(opt => {
+        const text = opt.getAttribute('data-' + lang);
+        if (text) opt.textContent = text;
+      });
+
+      document.documentElement.lang = lang;
+    }
+
+    // ── Mobile menu ──────────────────────────────────────────
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const btn = document.getElementById('ham-btn');
+      menu.classList.toggle('open');
+      btn.classList.toggle('open');
+      document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+    }
+
+    // ── Navbar scroll ─────────────────────────────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // ── Scroll reveal ─────────────────────────────────────────
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+    // Fallback: ensure all reveals trigger after a short delay
+    setTimeout(() => {
+      document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
+    }, 300);
+
+    // ── Form submit (Formspree) ────────────────────────────────
+    async function submitForm(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn = document.getElementById('submit-btn');
+      const msgBox = document.getElementById('form-success');
+      const origLabel = btn.getAttribute('data-' + currentLang) || btn.textContent;
+
+      // Loading state
+      btn.disabled = true;
+      btn.textContent = currentLang === 'es' ? 'Enviando…' : 'Sending…';
+      msgBox.style.display = 'none';
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          msgBox.style.cssText = 'display:block; background:rgba(0,200,232,0.08); border:1px solid rgba(0,200,232,0.35); color:var(--cyan); padding:16px 20px; border-radius:3px; text-align:center; font-family:"Barlow Condensed",sans-serif; font-size:16px; font-weight:600; letter-spacing:0.08em;';
+          msgBox.textContent = currentLang === 'es'
+            ? '🎉 ¡Solicitud enviada! Te contactaremos dentro de 24 horas.'
+            : '🎉 Request sent! We\'ll be in touch within 24 hours.';
+          form.reset();
+          form.querySelectorAll('.form-input').forEach(f => f.disabled = true);
+          btn.textContent = currentLang === 'es' ? '✓ Enviado' : '✓ Sent';
+        } else {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.errors ? data.errors.map(x => x.message).join(', ') : 'error');
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = origLabel;
+        msgBox.style.cssText = 'display:block; background:rgba(255,32,121,0.08); border:1px solid rgba(255,32,121,0.35); color:var(--magenta); padding:16px 20px; border-radius:3px; text-align:center; font-family:"Barlow Condensed",sans-serif; font-size:15px; font-weight:600; letter-spacing:0.06em;';
+        msgBox.textContent = currentLang === 'es'
+          ? '⚠ Algo salió mal. Por favor intenta de nuevo o escríbenos directamente.'
+          : '⚠ Something went wrong. Please try again or email us directly.';
+      }
+    }
+  </script>
+
+</body>
+</html>
