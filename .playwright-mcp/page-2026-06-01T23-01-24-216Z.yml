@@ -1,0 +1,196 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]:
+      - link "DjDavidMix Logo DjDavidMix" [ref=e4] [cursor=pointer]:
+        - /url: "#hero"
+        - img "DjDavidMix Logo" [ref=e5]
+        - generic [ref=e6]: DjDavidMix
+      - generic [ref=e7]:
+        - link "Services" [ref=e8] [cursor=pointer]:
+          - /url: "#services"
+        - link "Gallery" [ref=e9] [cursor=pointer]:
+          - /url: "#gallery"
+        - link "Book Now" [ref=e10] [cursor=pointer]:
+          - /url: "#booking"
+        - link "Contact" [ref=e11] [cursor=pointer]:
+          - /url: "#contact"
+      - generic [ref=e13]:
+        - button "EN" [ref=e14] [cursor=pointer]
+        - button "ES" [ref=e15] [cursor=pointer]
+  - generic [ref=e16]:
+    - generic [ref=e18]:
+      - img "DjDavidMix"
+    - generic [ref=e21]:
+      - generic [ref=e31]: LIVE DJ & EVENTS
+      - heading "YOUR NIGHT. YOUR VIBE. YOUR DJ." [level=1] [ref=e32]:
+        - text: YOUR NIGHT.
+        - text: YOUR VIBE.
+        - text: YOUR DJ.
+      - paragraph [ref=e33]: Professional DJ services for birthday parties, quinceañeras, private events & more. Making every moment unforgettable with premium sound and lighting.
+      - generic [ref=e34]:
+        - link "Book Your Event" [ref=e35] [cursor=pointer]:
+          - /url: "#booking"
+        - link "View Gallery" [ref=e36] [cursor=pointer]:
+          - /url: "#gallery"
+    - generic [ref=e38]: Scroll
+  - generic [ref=e42]:
+    - generic [ref=e43]:
+      - generic [ref=e44]: ALL
+      - generic [ref=e45]: Genres & Styles
+      - generic [ref=e46]: Hip-hop, reggaeton, pop, latin, EDM & more
+    - generic [ref=e47]:
+      - generic [ref=e48]: PRO
+      - generic [ref=e49]: Sound & Lighting
+      - generic [ref=e50]: Premium equipment, stage lighting & effects
+  - generic [ref=e52]:
+    - generic [ref=e53]:
+      - generic [ref=e54]: WHAT WE DO
+      - heading "Events We Make Unforgettable" [level=2] [ref=e55]:
+        - text: Events We Make
+        - text: Unforgettable
+      - paragraph [ref=e56]: From intimate birthday parties to large-scale events, DjDavidMix brings the energy, music, and professionalism to make your celebration legendary.
+    - generic [ref=e57]:
+      - generic [ref=e58]:
+        - img [ref=e60]
+        - heading "Birthday Parties" [level=3] [ref=e63]
+        - paragraph [ref=e64]: Turn your birthday into a full-on party experience. Custom playlists, mic announcements, and non-stop energy all night long.
+      - generic [ref=e65]:
+        - img [ref=e67]
+        - heading "Quinceañeras & Sweet 16s" [level=3] [ref=e69]
+        - paragraph [ref=e70]: Your special milestone deserves a special sound. Waltz, pop, reggaeton — we blend every tradition into one magical night.
+      - generic [ref=e71]:
+        - img [ref=e73]
+        - heading "Private & Family Events" [level=3] [ref=e75]
+        - paragraph [ref=e76]: Graduations, anniversaries, reunions — DjDavidMix tailors the perfect soundtrack for every private celebration.
+      - generic [ref=e77]:
+        - img [ref=e79]
+        - heading "Corporate & Social Events" [level=3] [ref=e82]
+        - paragraph [ref=e83]: From company parties to community events, we deliver professional sound management and crowd-reading expertise.
+  - generic [ref=e85]:
+    - generic [ref=e86]:
+      - generic [ref=e87]:
+        - generic [ref=e88]: GALLERY
+        - heading "Moments From Our Events" [level=2] [ref=e89]
+      - paragraph [ref=e90]: Every event tells a story. Here's a look at the energy we bring.
+    - generic [ref=e91]:
+      - generic [ref=e92] [cursor=pointer]:
+        - img "DJ Setup" [ref=e93]
+        - generic [ref=e94]: DJ Setup
+      - generic [ref=e96] [cursor=pointer]: Lighting Show
+      - generic [ref=e97] [cursor=pointer]:
+        - img "Venue Setup" [ref=e98]
+        - generic [ref=e99]: Venue Setup
+      - generic [ref=e100] [cursor=pointer]:
+        - img "Dance Floor" [ref=e101]
+        - generic [ref=e102]: Dance Floor
+      - generic [ref=e103] [cursor=pointer]:
+        - img "Venue Setup" [ref=e104]
+        - generic [ref=e105]: Venue Setup
+      - generic [ref=e106] [cursor=pointer]:
+        - img "Stage Lights" [ref=e107]
+        - generic [ref=e108]: Stage Lights
+      - generic [ref=e109] [cursor=pointer]:
+        - generic: ▶ VIDEO
+        - generic [ref=e111]: Event Highlights
+  - generic [ref=e114]:
+    - generic [ref=e115]:
+      - generic [ref=e116]: BOOK NOW
+      - heading "Ready To Make Your Event Legendary?" [level=2] [ref=e117]:
+        - text: Ready To Make
+        - text: Your Event
+        - text: Legendary?
+      - paragraph [ref=e118]: Fill out the booking form and DjDavidMix will get back to you within 24 hours to confirm availability and discuss the details of your event.
+      - generic [ref=e119]:
+        - generic [ref=e120]:
+          - img [ref=e122]
+          - generic [ref=e125]:
+            - generic [ref=e126]: Email
+            - generic [ref=e127]: djdavidmix@gmail.com
+        - generic [ref=e128]:
+          - img [ref=e130]
+          - generic [ref=e132]:
+            - generic [ref=e133]: Phone
+            - generic [ref=e134]: (555) 000-0000
+        - generic [ref=e135]:
+          - img [ref=e137]
+          - generic [ref=e140]:
+            - generic [ref=e141]: Service Area
+            - generic [ref=e142]: Available for all events
+    - generic [ref=e143]:
+      - heading "Send Your Request" [level=3] [ref=e144]
+      - generic [ref=e145]:
+        - generic [ref=e146]:
+          - generic [ref=e147]:
+            - generic [ref=e148]: Your Name
+            - textbox "Full name" [ref=e149]
+          - generic [ref=e150]:
+            - generic [ref=e151]: Email Address
+            - textbox "your@email.com" [ref=e152]
+        - generic [ref=e153]:
+          - generic [ref=e154]:
+            - generic [ref=e155]: Phone Number
+            - textbox "(555) 000-0000" [ref=e156]
+          - generic [ref=e157]:
+            - generic [ref=e158]: Event Date
+            - textbox [ref=e159]
+        - generic [ref=e160]:
+          - generic [ref=e161]: Event Type
+          - combobox [ref=e162]:
+            - option "Select event type" [disabled] [selected]
+            - option "Birthday Party"
+            - option "Quinceañera / Sweet 16"
+            - option "Private Event"
+            - option "Corporate Event"
+            - option "Other"
+        - generic [ref=e163]:
+          - generic [ref=e164]:
+            - generic [ref=e165]: Venue / Location
+            - textbox "Venue name or city" [ref=e166]
+          - generic [ref=e167]:
+            - generic [ref=e168]: Expected Guests
+            - combobox [ref=e169]:
+              - option "—" [disabled] [selected]
+              - option "Under 50"
+              - option "50 – 100"
+              - option "100 – 200"
+              - option "200+"
+        - generic [ref=e170]:
+          - generic [ref=e171]: Additional Details
+          - textbox "Tell us about your event, music preferences, special requests..." [ref=e172]
+        - button "Send Booking Request" [ref=e173] [cursor=pointer]
+  - contentinfo [ref=e174]:
+    - generic [ref=e175]:
+      - generic [ref=e176]:
+        - generic [ref=e177]:
+          - img "DjDavidMix" [ref=e178]
+          - paragraph [ref=e179]: Professional DJ services for every celebration. Making your moments unforgettable with premium sound, lighting, and music.
+          - generic [ref=e180]:
+            - link "Instagram" [ref=e181] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e182]
+            - link "Facebook" [ref=e185] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e186]
+            - link "TikTok" [ref=e188] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e189]
+        - generic [ref=e191]:
+          - generic [ref=e192]: Quick Links
+          - generic [ref=e193]:
+            - link "Home" [ref=e194] [cursor=pointer]:
+              - /url: "#hero"
+            - link "Services" [ref=e195] [cursor=pointer]:
+              - /url: "#services"
+            - link "Gallery" [ref=e196] [cursor=pointer]:
+              - /url: "#gallery"
+            - link "Book Now" [ref=e197] [cursor=pointer]:
+              - /url: "#booking"
+        - generic [ref=e198]:
+          - generic [ref=e199]: Contact
+          - generic [ref=e200]:
+            - generic [ref=e201]: djdavidmix@gmail.com
+            - generic [ref=e202]: (555) 000-0000
+            - generic [ref=e203]: Available for all events
+      - generic [ref=e205]:
+        - generic [ref=e206]: © 2026 DjDavidMix. All rights reserved.
+        - generic [ref=e207]: Professional DJ Services
